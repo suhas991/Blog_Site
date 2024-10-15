@@ -26,4 +26,37 @@ export class Service {
       return false;
     }
   }
+
+  async getPosts(queries = [Query.equal("status", "active")]) {
+    try {
+      return await this.databases.listDocuments(
+        config.appwriteDatabaseId,
+        config.appwriteCollectionId,
+        queries
+      );
+    } catch (error) {
+      console.log("Appwrite service :: getPosts() :: ", error);
+      return false;
+    }
+  }
+
+  async createPost({ title, slup, content, featuredImage, status, userId }) {
+    try {
+      return await this.databases.createDocument(
+        config.appwriteDatabaseId,
+        config.appwriteCollectionId,
+        slug,
+        {
+          title,
+          content,
+          featuredImage,
+          status,
+          userId,
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: createPost() :: ", error);
+      return false;
+    }
+  }
 }
